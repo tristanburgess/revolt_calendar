@@ -1,0 +1,83 @@
+{% extends 'main.html' %}
+{% block content %}
+{% include 'header.html' %}
+<div id="calendar">
+    <div id="timeSidebar">
+        <div class="timeSlot">9:00 <span>AM</span></div>
+         <div class="timeSlot"><span>9:30</span></div>
+         <div class="timeSlot">10:00 <span>AM</span></div>
+         <div class="timeSlot"><span>10:30</span></div>
+         <div class="timeSlot">11:00 <span>AM</span></div>
+         <div class="timeSlot"><span>11:30</span></div>
+         <div class="timeSlot">12:00 <span>PM</span></div>
+         <div class="timeSlot"><span>12:30</span></div>
+         <div class="timeSlot">1:00 <span>PM</span></div>
+         <div class="timeSlot"><span>1:30</span></div>
+         <div class="timeSlot">2:00 <span>PM</span></div>
+         <div class="timeSlot"><span>2:30</span></div>
+         <div class="timeSlot">3:00 <span>PM</span></div>
+         <div class="timeSlot"><span>3:30</span></div>
+         <div class="timeSlot">4:00 <span>PM</span></div>
+         <div class="timeSlot"><span>4:30</span></div>
+         <div class="timeSlot">5:00 <span>PM</span></div>
+         <div class="timeSlot"><span>5:30</span></div>
+         <div class="timeSlot">6:00 <span>PM</span></div>
+         <div class="timeSlot"><span>6:30</span></div>
+         <div class="timeSlot">7:00 <span>PM</span></div>
+         <div class="timeSlot"><span>7:30</span></div>
+         <div class="timeSlot">8:00 <span>PM</span></div>
+         <div class="timeSlot"><span>8:30</span></div>
+         <div class="timeSlot">9:00 <span>PM</span></div>
+    </div>
+    <div id="content"></div>
+</div>
+
+<script>
+    
+    var calendar = function() {
+        var renderCalendar = function(events) {
+            var eventsL = events.length;
+            
+            for (i=0; i < eventsL; ++i) {
+               var event = events[i];
+               
+               var secondsToPxConversion = (40/(30*60))/1000;
+               
+               var startNumArr = events[i].startTime.split(":");
+               var startNum = (startNumArr[0] * 60 * 60 + startNumArr[1] * 60 + startNumArr[2]) * secondsToPxConversion;
+               var endNumArr = events[i].endTime.split(":");
+               var endNum = (endNumArr[0] * 60 * 60 + endNumArr[1] * 60 + endNumArr[2]) * secondsToPxConversion;
+               
+               var div = document.createElement("div");
+               div.style.width = "50%";
+               div.style.height = "100px";
+               div.style.top = (200 + startNum) + "px";
+               div.style.left = "250px";
+               div.style.position = "absolute";
+               div.style.background = "#"+Math.floor(Math.random()*16777215).toString(16);
+               
+               document.getElementById("content").appendChild(div);
+             }
+        };
+        
+        return {
+            renderCalendar: renderCalendar
+        };
+    }();
+    
+    var events = [];
+    '{% for e in events %}'
+        var event = {};
+        event.startTime = '{{e.startTime}}';
+        event.endTime = '{{e.endTime}}';
+        event.title = '{{e.title}}';
+        event.description = '{{e.description}}';
+        event.address = '{{e.address}}';
+        event.type = '{{e.type.name}}';
+        events.push(event);
+    '{% endfor %}'
+    
+    calendar.renderCalendar(events);
+</script>
+
+{% endblock %}

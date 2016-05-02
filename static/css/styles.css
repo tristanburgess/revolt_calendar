@@ -1,0 +1,30 @@
+input {color: #000000;}
+#file {color: #A9A9A9;}
+
+p {color: #A9A9A9;}
+
+div {background-color: #171515;}
+
+a {text-decoration: none; color:#A9A9A9; font-size: 1em;}
+
+h1, h2 {color: #A9A9A9;}
+
+#timeSidebar {
+    height:1000px;
+    margin-right:10px;
+    font-family:arial;
+    margin-top:-3px;
+}
+
+#timeSidebar .timeSlot {
+    color:#00FFFF;
+    font-weight:bold;
+    height:40px;
+    text-align:left;
+    border-bottom:thin solid #000000;
+}
+
+#timeSidebar .timeSlot span {
+    color:#909090;
+    font-size:12px;
+}
