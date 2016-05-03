@@ -36,7 +36,7 @@ Here's how to get started (with Linux):
 * Start the app server: python revolt_calendar.py
 * Connect via localhost: http://localhost:5000
 * Add a dataset
-    * Use a JSON file that follows the following format:
+    * Use a JSON file that follows the following format. You can find example files in the tests dir:
     ![alt-tag](http://i.imgur.com/II2Mswa.png)
     * Upload your JSON file and give it a name:
     ![alt-tag](http://i.imgur.com/bUFut0W.png)
