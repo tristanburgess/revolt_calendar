@@ -1,55 +1,55 @@
 [
   {
-    "endTime": "22:00:00",
-    "startTime": "17:49:48",
+    "endTime": "11:00:00",
+    "startTime": "9:30:00",
     "title": "Test 1",
     "description": "Test 1",
     "address": "Test 1",
     "type": "performance"
   },
   {
-    "endTime": "12:18:27",
-    "startTime": "09:05:11",
+    "endTime": "12:00:00",
+    "startTime": "10:30:00",
     "title": "Test 2",
     "description": "Test 2",
     "address": "Test 2",
     "type": "panel"
   },
   {
-    "endTime": "11:11:14",
-    "startTime": "9:47:09",
+    "endTime": "17:30:00",
+    "startTime": "11:00:00",
     "title": "Test 3",
     "description": "Test 3",
     "address": "Test 3",
     "type": "speaker"
   },
   {
-    "endTime": "21:40:14",
-    "startTime": "20:42:53",
+    "endTime": "13:00:00",
+    "startTime": "11:30:00",
     "title": "Test 4",
     "description": "Test 4",
     "address": "Test 4",
     "type": "party"
   },
   {
-    "endTime": "13:22:28",
-    "startTime": "12:24:39",
+    "endTime": "16:00:00",
+    "startTime": "14:00:00",
     "title": "Test 5",
     "description": "Test 5",
     "address": "Test 5",
     "type": "workshop"
   },
   {
-    "endTime": "13:45:54",
-    "startTime": "12:40:57",
+    "endTime": "19:30:00",
+    "startTime": "18:00:00",
     "title": "Test 6",
     "description": "Test 6",
     "address": "Test 6",
     "type": "demo"
   },
   {
-    "endTime": "19:04:13",
-    "startTime": "13:51:40",
+    "endTime": "21:00:00",
+    "startTime": "20:00:00",
     "title": "Test 7",
     "description": "Test 7",
     "address": "Test 7",

@@ -9,6 +9,15 @@ a {text-decoration: none; color:#A9A9A9; font-size: 1em;}
 
 h1, h2 {color: #A9A9A9;}
 
+#calendar {
+	width:817px;
+	height:800px;
+	padding:0 10px;
+	margin:0 auto;
+	position:relative;
+	overflow-y:scroll;
+}
+
 #timeSidebar {
     height:1000px;
     margin-right:10px;
@@ -21,7 +30,7 @@ h1, h2 {color: #A9A9A9;}
     font-weight:bold;
     height:40px;
     text-align:left;
-    border-bottom:thin solid #000000;
+    border-top:thin solid #000000;
 }
 
 #timeSidebar .timeSlot span {

@@ -33,31 +33,87 @@
 </div>
 
 <script>
-    
     var calendar = function() {
-        var renderCalendar = function(events) {
-            var eventsL = events.length;
+        
+        var timeStringToPixels =  function(timeStr) {
+            var startHourToSeconds = 9 * 60 * 60;
+            var secondsPerHalfHour = 1800;
+            var pixelsPerHalfHour = 40;
             
-            for (i=0; i < eventsL; ++i) {
-               var event = events[i];
+            var numArr = timeStr.split(":");
+            var toSeconds = parseInt(numArr[0]) * 60 * 60 + parseInt(numArr[1]) * 60 + parseInt(numArr[2]);
+            return ((toSeconds - startHourToSeconds) / secondsPerHalfHour) * pixelsPerHalfHour;
+        };
+        
+        var getOverlapContainers = function(events) {
+            var eventsL = events.length;
+            var segments = [];
+            
+            for (i = 0; i < eventsL; ++i) {
+                segments.push({index: i, val: timeStringToPixels(events[i].startTime), delim: "l"});
+                segments.push({index: i, val: timeStringToPixels(events[i].endTime), delim: "r"});
+            }
+            
+            segments.sort(function (a, b) {
+                if (a.val > b.val) {
+                    return 1;
+                } if (a.val < b.val) {
+                    return -1;
+                } if (a.delim > b.delim) {
+                    return 1;
+                } if (a.delim < b.delim) {
+                    return -1;
+                } 
+                
+                return 0;
+            });
+            
+            var overlaps = [];
+            var containerIdx = 0;
+            for (segment of segments) {
+                if (segment.delim == "l") {
+                    overlaps.push(segment);
+                } else if (segment.delim == "r") {
+                    // Number of containers to divvy up current considered events
+                    var containers = overlaps.length;
+                    for (segment of overlaps) {
+                        if (events[segment.index].containers > containers) {
+                          containers = events[segment.index].containers;
+                        }
+                    }
+                    for (segment of overlaps) {
+                        if (!events[segment.index].containers) {
+                            events[segment.index].containers = containers;
+                            events[segment.index].containerIdx = containerIdx++ % containers + 1;
+                        }
+                    }
+                    overlaps.pop();
+                }
+            }
+            
+            return events;
+        };
+        
+        var renderCalendar = function(rawEvents) {
+            var events = getOverlapContainers(rawEvents);
+            
+            var eventsL = events.length;
+            for (var i = 0; i < eventsL; ++i) {
+                var startPx = timeStringToPixels(events[i].startTime);
+                var endPx = timeStringToPixels(events[i].endTime);
                
-               var secondsToPxConversion = (40/(30*60))/1000;
-               
-               var startNumArr = events[i].startTime.split(":");
-               var startNum = (startNumArr[0] * 60 * 60 + startNumArr[1] * 60 + startNumArr[2]) * secondsToPxConversion;
-               var endNumArr = events[i].endTime.split(":");
-               var endNum = (endNumArr[0] * 60 * 60 + endNumArr[1] * 60 + endNumArr[2]) * secondsToPxConversion;
-               
-               var div = document.createElement("div");
-               div.style.width = "50%";
-               div.style.height = "100px";
-               div.style.top = (200 + startNum) + "px";
-               div.style.left = "250px";
-               div.style.position = "absolute";
-               div.style.background = "#"+Math.floor(Math.random()*16777215).toString(16);
-               
-               document.getElementById("content").appendChild(div);
-             }
+                var div = document.createElement("div");
+                div.style.width = (675 / (events[i].containers)) + "px";
+                div.style.height = (endPx - startPx) + "px";
+                div.style.top = (startPx - 2) + "px";
+                div.style.left = (((675 / (events[i].containers)) * (events[i].containerIdx - 1)) + 100) + "px";
+                div.style.position = "absolute";
+                div.style.background = "#"+Math.floor(Math.random()*16777215).toString(16);
+                
+                var content = document.createElement("div");
+
+                document.getElementById("content").appendChild(div);
+            }
         };
         
         return {
