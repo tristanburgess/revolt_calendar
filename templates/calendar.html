@@ -29,20 +29,34 @@
          <div class="timeSlot"><span>8:30</span></div>
          <div class="timeSlot">9:00 <span>PM</span></div>
     </div>
-    <div id="content"></div>
+    <div id="calendarContent"></div>
 </div>
 
 <script>
     var calendar = function() {
         
+        // Converts a timestamp string to the pixel position on the calendar
+        // that the timestamp corresponds to.
         var timeStringToPixels =  function(timeStr) {
+            // Our calendar starts at 9 AM
             var startHourToSeconds = 9 * 60 * 60;
+            // Our calendar has half hour delimiters
             var secondsPerHalfHour = 1800;
             var pixelsPerHalfHour = 40;
             
             var numArr = timeStr.split(":");
             var toSeconds = parseInt(numArr[0]) * 60 * 60 + parseInt(numArr[1]) * 60 + parseInt(numArr[2]);
             return ((toSeconds - startHourToSeconds) / secondsPerHalfHour) * pixelsPerHalfHour;
+        };
+        
+        var segmentIndexSortCompare = function (a, b) {
+            if (a.index > b.index) {
+                return 1;
+            } if (a.index < b.index) {
+                return -1;
+            } 
+            
+            return 0;
         };
         
         var getOverlapContainers = function(events) {
@@ -54,6 +68,7 @@
                 segments.push({index: i, val: timeStringToPixels(events[i].endTime), delim: "r"});
             }
             
+            // Sort by val asc, then delimiter asc (left before right)
             segments.sort(function (a, b) {
                 if (a.val > b.val) {
                     return 1;
@@ -68,32 +83,56 @@
                 return 0;
             });
             
-            var overlaps = [];
-            var containerIdx = 0;
-
+            var starts = [];
+            var ends = [];
+            var containers = [];
             for (segment of segments) {
                 if (segment.delim == "l") {
-                    overlaps.push(segment);
+                    starts.push(segment);
                 } else if (segment.delim == "r") {
-                    // Number of containers to divvy up current considered events
-                    var containers = overlaps.length;
-                    for (segment of overlaps) {
-                        if (events[segment.index].containers > containers) {
-                          containers = events[segment.index].containers;
-                        }
-                    }
-                    for (segment of overlaps) {
-                        if (!events[segment.index].containers) {
-                            events[segment.index].containers = containers;
-                            events[segment.index].containerIdx = containerIdx++ % containers + 1;
+                    ends.push(segment);
+                }
+                
+                // We must have a complete set of overlapping intervals
+                // when all starts currently in consideration have been closed.
+                // The next new interval cannot overlap with any of the previous intervals.
+                if (starts.length == ends.length) {
+                    starts.sort(segmentIndexSortCompare);
+                    ends.sort(segmentIndexSortCompare);
+                    
+                    containers[0] = [];
+                    containers[0].push(ends[0]);
+                    events[ends[0].index].containerIdx = 0;
+                    for (var i = 1; i < starts.length; ++i) {
+                        for (var j = 0; j < containers.length; ++j) {
+
+                            if (containers[j][containers[j].length - 1].val < starts[i].val) {
+                                containers[j].push(ends[i]);
+                                events[starts[i].index].containerIdx = j;
+                                break
+                            } else if (typeof containers[j + 1] !== "object") {
+                                containers[j + 1] = [];
+                                containers[j + 1].push(ends[i]);
+                                events[starts[i].index].containerIdx = j+1;
+                                break;
+                            } 
                         }
                     }
                     
-                    overlaps.pop();
+                    // Sets the number of containers for each event within the
+                    // current overlapping interval set.
+                    for (var i = 0; i < containers.length; ++i) {
+                        for (var j = 0; j < containers[i].length; ++j) {
+                            events[containers[i][j].index].containers = containers.length;
+                        }
+                    }
+
+                    containers = [];
+                    starts = [];
+                    ends = []
                 }
             }
-            console.log(segments);
-            console.log(events)
+
             return events;
         };
         
@@ -102,33 +141,39 @@
             
             var eventsL = events.length;
             for (var i = 0; i < eventsL; ++i) {
+                // Calendar event positioning
                 var startPx = timeStringToPixels(events[i].startTime);
                 var endPx = timeStringToPixels(events[i].endTime);
-               
+                
+                var contentWidth = 675;
+                var topOffset = -2;
+                var leftOffset = 100;
+                
                 var div = document.createElement("div");
-                div.style.width = (675 / (events[i].containers)) + "px";
+                div.style.width = (contentWidth / (events[i].containers)) + "px";
                 div.style.height = (endPx - startPx) + "px";
-                div.style.top = (startPx - 2) + "px";
-                div.style.left = (((675 / (events[i].containers)) * (events[i].containerIdx - 1)) + 100) + "px";
+                div.style.top = (startPx + topOffset) + "px";
+                div.style.left = ((contentWidth / (events[i].containers)) * (events[i].containerIdx) + leftOffset) + "px";
                 div.style.position = "absolute";
                 
+                // Calendar event styling
                 switch(events[i].type) {
-                    case 'performance':
+                    case "performance":
                         div.style.background = "#21B6A8";
                         break;
-                    case 'panel':
+                    case "panel":
                         div.style.background = "#177F75";
                         break;
-                    case 'speaker':
+                    case "speaker":
                         div.style.background = "#B6212D";
                         break;
-                    case 'party':
+                    case "party":
                         div.style.background = "#7F171F";
                         break;
-                    case 'workshop':
+                    case "workshop":
                         div.style.background = "#B67721";
                         break;
-                    case 'demo':
+                    case "demo":
                         div.style.background = "#7F5417";
                         break;
                     default:
@@ -137,11 +182,14 @@
                 }
                 
                 var title = document.createTextNode(events[i].title);
-                var a = document.createElement('a');
+                
+                // Calendar event link to JSON endpoint entry
+                var a = document.createElement("a");
                 a.appendChild(title);
                 a.href = "/event/" + parseInt(events[i].id) + "/JSON/";
                 div.appendChild(a);
-                document.getElementById("content").appendChild(div);
+                
+                document.getElementById("calendarContent").appendChild(div);
             }
         };
         
@@ -150,6 +198,7 @@
         };
     }();
     
+    // Pass in event objects from backend
     var events = [];
     '{% for e in events %}'
         var event = {};

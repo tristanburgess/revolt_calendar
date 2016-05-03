@@ -23,18 +23,32 @@ form {
     width:50%;
     margin:0 auto;
 }
+
+.flashes {
+    color: #00FFFF;
+}
     
 #file {
     color: #A9A9A9;
 }
 
 #calendar {
-	width:817px;
-	height:800px;
-	padding:0 10px;
-	margin:0 auto;
-	position:relative;
-	overflow-y:scroll;
+    width:817px;
+    height:800px;
+    padding:0 10px;
+    margin:0 auto;
+    position:relative;
+    overflow-y:scroll;
+}
+
+#calendarContent {
+    font-family:arial;
+    font-weight:bold;
+    font-size:16px;
+}
+
+#calendarContent a {
+    color:#FFFFFF;
 }
 
 #timeSidebar {
@@ -55,14 +69,4 @@ form {
 #timeSidebar .timeSlot span {
     color:#909090;
     font-size:12px;
-}
-
-#content {
-    font-family:arial;
-    font-weight:bold;
-    font-size:16px;
-}
-
-#content a {
-    color:#FFFFFF;
 }
