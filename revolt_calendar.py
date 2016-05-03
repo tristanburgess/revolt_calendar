@@ -1,9 +1,7 @@
 import os
 import random
 import string
-import httplib2
 import json
-import requests
 from datetime import datetime
 from flask import render_template, request, redirect, url_for, jsonify, flash
 from models.event import Event

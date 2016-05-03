@@ -16,11 +16,8 @@ calendar. This is a REVOLT exclusive :)
 Requirements:
 
 * Python version 2.7.11 or greater.
-* python-pip
 * python-flask 
 * python-sqlalchemy
-* requests
-* httplib2
 
 Here's how to get started (with Linux):
 
@@ -29,9 +26,6 @@ Here's how to get started (with Linux):
 * Navigate to the directory where you have downloaded the repo, and unzip if necessary
 * Install dependencies:
     * apt-get -qqy install python python-flask python-sqlalchemy
-    * apt-get -qqy install python-pip
-    * pip install requests
-    * pip install httplib2
 * Create the app database: python db_setup.py
 * Start the app server: python revolt_calendar.py
 * Connect via localhost: http://localhost:5000
