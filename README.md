@@ -35,6 +35,13 @@ Here's how to get started (with Linux):
 * Create the app database: python db_setup.py
 * Start the app server: python revolt_calendar.py
 * Connect via localhost: http://localhost:5000
+* Add a dataset
+    * Use a JSON file that follows the following format:
+    ![alt-tag](http://i.imgur.com/II2Mswa.png)
+    * Upload your JSON file and give it a name:
+    ![alt-tag](http://i.imgur.com/bUFut0W.png)
+    * Select the dataset from the list and click "Render Calendar!":
+    ![alt-tag](http://i.imgur.com/HJ25vgg.png)
 
 ## What's included
 
