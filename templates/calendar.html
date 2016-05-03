@@ -63,7 +63,7 @@
             var eventsL = events.length;
             var segments = [];
             
-            for (i = 0; i < eventsL; ++i) {
+            for (var i = 0; i < eventsL; ++i) {
                 segments.push({index: i, val: timeStringToPixels(events[i].startTime), delim: "l"});
                 segments.push({index: i, val: timeStringToPixels(events[i].endTime), delim: "r"});
             }
@@ -86,7 +86,7 @@
             var starts = [];
             var ends = [];
             var containers = [];
-            for (segment of segments) {
+            for (var segment of segments) {
                 if (segment.delim == "l") {
                     starts.push(segment);
                 } else if (segment.delim == "r") {
@@ -105,11 +105,10 @@
                     events[ends[0].index].containerIdx = 0;
                     for (var i = 1; i < starts.length; ++i) {
                         for (var j = 0; j < containers.length; ++j) {
-
                             if (containers[j][containers[j].length - 1].val < starts[i].val) {
                                 containers[j].push(ends[i]);
                                 events[starts[i].index].containerIdx = j;
-                                break
+                                break;
                             } else if (typeof containers[j + 1] !== "object") {
                                 containers[j + 1] = [];
                                 containers[j + 1].push(ends[i]);
@@ -129,7 +128,7 @@
 
                     containers = [];
                     starts = [];
-                    ends = []
+                    ends = [];
                 }
             }
 
