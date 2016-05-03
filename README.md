@@ -42,6 +42,9 @@ Here's how to get started (with Linux):
     ![alt-tag](http://i.imgur.com/bUFut0W.png)
     * Select the dataset from the list and click "Render Calendar!":
     ![alt-tag](http://i.imgur.com/HJ25vgg.png)
+    * You can also view the JSON endpoint for any event by clicking on the event's title in the calendar:
+    ![alt-tag](http://i.imgur.com/4tFLQy5.png)
+    ![alt-tag](http://i.imgur.com/T2jspjE.png)
 
 ## What's included
 
