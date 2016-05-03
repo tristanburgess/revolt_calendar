@@ -9,6 +9,7 @@
 This app provides a full stack solution for displaying a single-day event
 calendar. This is a REVOLT exclusive :)
 
+![alt-tag](http://i.imgur.com/R0lkGNz.png)
 
 ## Getting started
 
