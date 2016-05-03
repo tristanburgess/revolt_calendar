@@ -152,10 +152,10 @@
                 var leftOffset = 100;
                 
                 var div = document.createElement("div");
-                div.style.width = (contentWidth / (events[i].containers)) + "px";
+                div.style.width = (contentWidth / events[i].containers) + "px";
                 div.style.height = (endPx - startPx) + "px";
                 div.style.top = (startPx + topOffset) + "px";
-                div.style.left = ((contentWidth / (events[i].containers)) * (events[i].containerIdx) + leftOffset) + "px";
+                div.style.left = (contentWidth / events[i].containers * events[i].containerIdx + leftOffset) + "px";
                 div.style.position = "absolute";
                 
                 // Calendar event styling
