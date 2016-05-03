@@ -104,15 +104,18 @@
                     containers[0].push(ends[0]);
                     events[ends[0].index].containerIdx = 0;
                     for (var i = 1; i < starts.length; ++i) {
+                        // Place each event in the minimum possible container
                         for (var j = 0; j < containers.length; ++j) {
                             if (containers[j][containers[j].length - 1].val < starts[i].val) {
+                                // There is space in this container to place the event
                                 containers[j].push(ends[i]);
                                 events[starts[i].index].containerIdx = j;
                                 break;
                             } else if (typeof containers[j + 1] !== "object") {
+                                // Create a new container to store the event
                                 containers[j + 1] = [];
                                 containers[j + 1].push(ends[i]);
-                                events[starts[i].index].containerIdx = j+1;
+                                events[starts[i].index].containerIdx = j + 1;
                                 break;
                             } 
                         }
