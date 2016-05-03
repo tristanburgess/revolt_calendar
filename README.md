@@ -45,7 +45,7 @@ Here's how to get started (with Linux):
 Within the download, you'll find the following files of interest:
 
 ```
-worksack/
+revolt_calendar/
 ├── models/ - contains DB definitions
 ├── static/ - contains css and image files
 ├── templates/ - contains the site's data-driven html pages
