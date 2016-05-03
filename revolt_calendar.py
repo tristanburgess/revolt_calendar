@@ -18,10 +18,10 @@ ALLOWED_EXTENSIONS = set(['json'])
 def valid_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/event/<int:event_id>/JSON')
+@app.route('/event/<int:event_id>/JSON/')
 def eventJSON(event_id):
-    events = session.query(Event).filter_by(id=event_id).all()
-    return jsonify(Event=[event.serialize for event in events])
+    event = session.query(Event).filter_by(id=event_id).one()
+    return jsonify(event.serialize)
 
 # Dashboard
 @app.route('/')
@@ -45,6 +45,8 @@ def renderCalendar():
     """
     if request.method == 'POST':
         inputSetId = request.form["inputSet"]
+        if (inputSetId is None):
+            return redirect(url_for('showDashboard'))
         events = session.query(Event).filter_by(input_set_id=inputSetId).all()
         return render_template('calendar.html', events=events)
     return redirect(url_for('showDashboard'))

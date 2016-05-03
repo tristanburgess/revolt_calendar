@@ -70,6 +70,7 @@
             
             var overlaps = [];
             var containerIdx = 0;
+
             for (segment of segments) {
                 if (segment.delim == "l") {
                     overlaps.push(segment);
@@ -87,10 +88,12 @@
                             events[segment.index].containerIdx = containerIdx++ % containers + 1;
                         }
                     }
+                    
                     overlaps.pop();
                 }
             }
-            
+            console.log(segments);
+            console.log(events)
             return events;
         };
         
@@ -108,10 +111,36 @@
                 div.style.top = (startPx - 2) + "px";
                 div.style.left = (((675 / (events[i].containers)) * (events[i].containerIdx - 1)) + 100) + "px";
                 div.style.position = "absolute";
-                div.style.background = "#"+Math.floor(Math.random()*16777215).toString(16);
                 
-                var content = document.createElement("div");
-
+                switch(events[i].type) {
+                    case 'performance':
+                        div.style.background = "#21B6A8";
+                        break;
+                    case 'panel':
+                        div.style.background = "#177F75";
+                        break;
+                    case 'speaker':
+                        div.style.background = "#B6212D";
+                        break;
+                    case 'party':
+                        div.style.background = "#7F171F";
+                        break;
+                    case 'workshop':
+                        div.style.background = "#B67721";
+                        break;
+                    case 'demo':
+                        div.style.background = "#7F5417";
+                        break;
+                    default:
+                        div.style.background = "#B9B9B9";
+                        break;
+                }
+                
+                var title = document.createTextNode(events[i].title);
+                var a = document.createElement('a');
+                a.appendChild(title);
+                a.href = "/event/" + parseInt(events[i].id) + "/JSON/";
+                div.appendChild(a);
                 document.getElementById("content").appendChild(div);
             }
         };
@@ -124,6 +153,7 @@
     var events = [];
     '{% for e in events %}'
         var event = {};
+        event.id = '{{e.id}}';
         event.startTime = '{{e.startTime}}';
         event.endTime = '{{e.endTime}}';
         event.title = '{{e.title}}';

@@ -1,13 +1,32 @@
-input {color: #000000;}
-#file {color: #A9A9A9;}
-
 p {color: #A9A9A9;}
 
-div {background-color: #171515;}
+div {
+    background-color: #171515;
+}
 
-a {text-decoration: none; color:#A9A9A9; font-size: 1em;}
+a {
+    text-decoration: none; 
+    color:#A9A9A9; 
+    font-size: 1em;
+}
 
-h1, h2 {color: #A9A9A9;}
+h1 {
+    color: #A9A9A9;
+}
+
+h2 {
+    color: #B67721;
+}
+
+form {
+    border:thin solid #21B6A8;
+    width:50%;
+    margin:0 auto;
+}
+    
+#file {
+    color: #A9A9A9;
+}
 
 #calendar {
 	width:817px;
@@ -36,4 +55,14 @@ h1, h2 {color: #A9A9A9;}
 #timeSidebar .timeSlot span {
     color:#909090;
     font-size:12px;
+}
+
+#content {
+    font-family:arial;
+    font-weight:bold;
+    font-size:16px;
+}
+
+#content a {
+    color:#FFFFFF;
 }

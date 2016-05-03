@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import Column, ForeignKey, PrimaryKeyConstraint, Integer, String, Time
 from models.base import Base
 from models.event_type import EventType
@@ -24,9 +25,9 @@ class Event(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'startTime': self.startTime,
-            'endTime': self.endTime,
+            'startTime': self.startTime.strftime("%H:%M:%S"),
+            'endTime': self.endTime.strftime("%H:%M:%S"),
             'address': self.address,
-            'type': self.type,
-            'input_set': self.input_set
+            'type': self.type.serialize,
+            'input_set': self.input_set.serialize
         }

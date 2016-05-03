@@ -7,15 +7,14 @@
     <input type="submit" value="Upload Input Set">
 </form><br>
 
-<h2>Choose input set</h2>
-
 <form method="POST" action="{{ url_for('renderCalendar') }}">
+    <h2>Choose input set</h2>
     <select name="inputSet">
         {% for i in inputSets %}
             <option value={{i.id}}>{{i.name}}</option>
         {% endfor %}
     </select><br><br>
-    <input type="submit" value="Render calendar!">
+    <input type="submit" value="Render Calendar!">
 </form><br>
 
 {% endblock %}
