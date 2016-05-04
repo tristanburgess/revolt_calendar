@@ -25,9 +25,9 @@ class Event(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'start_time': self.start_time.strftime("%H:%M:%S"),
-            'end_time': self.end_time.strftime("%H:%M:%S"),
+            'startTime': self.start_time.strftime("%H:%M:%S"),
+            'endTime': self.end_time.strftime("%H:%M:%S"),
             'address': self.address,
             'type': self.type.serialize,
-            'input_set': self.input_set.serialize
+            'inputSet': self.input_set.serialize
         }
