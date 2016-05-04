@@ -1,16 +1,16 @@
 {% extends 'main.html' %}
 {% block content %}
 {% include 'header.html' %}
-<form method="POST" enctype="multipart/form-data" action="{{ url_for('uploadEvents') }}">
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_events') }}">
     <input type="text" placeholder="Input set name..." name="name">
     <input type="file" name="file" id="file">
     <input type="submit" value="Upload Input Set">
 </form><br>
 
-<form method="POST" action="{{ url_for('renderCalendar') }}">
+<form method="POST" action="{{ url_for('render_calendar') }}">
     <h2>Choose input set</h2>
     <select name="inputSet">
-        {% for i in inputSets %}
+        {% for i in input_sets %}
             <option value={{i.id}}>{{i.name}}</option>
         {% endfor %}
     </select><br><br>

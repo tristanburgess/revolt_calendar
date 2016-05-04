@@ -11,8 +11,8 @@ class Event(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False)
     description = Column(String(500))
-    startTime = Column(Time, nullable=False)
-    endTime = Column(Time, nullable=False)
+    start_time = Column(Time, nullable=False)
+    end_time = Column(Time, nullable=False)
     address = Column(String(500))
     type_id = Column(Integer, ForeignKey('event_type.id'))
     type = relationship(EventType)
@@ -25,8 +25,8 @@ class Event(Base):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'startTime': self.startTime.strftime("%H:%M:%S"),
-            'endTime': self.endTime.strftime("%H:%M:%S"),
+            'start_time': self.start_time.strftime("%H:%M:%S"),
+            'end_time': self.end_time.strftime("%H:%M:%S"),
             'address': self.address,
             'type': self.type.serialize,
             'input_set': self.input_set.serialize
